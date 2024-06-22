@@ -1,4 +1,10 @@
 import { Locator, Page } from "@playwright/test";
+import { enums } from "../utils/enums";
+
+const {
+    dates,
+    priorities
+} = enums
 
 
 export class DashboardPage{
@@ -17,6 +23,13 @@ export class DashboardPage{
     readonly nextWeekendButton: Locator;
     readonly nextWeekButton: Locator;
     readonly notDateButton: Locator;
+    readonly priority1Button: Locator;
+    readonly priority2Button: Locator;
+    readonly priority3Button: Locator;
+    readonly priority4Button: Locator;
+    readonly inboxButton: Locator;
+    readonly task1: Locator;
+    readonly task2: Locator;
     
     constructor(page: Page){
         this.page = page;
@@ -34,16 +47,69 @@ export class DashboardPage{
         this.nextWeekendButton = page.getByRole('button', { name: 'Próximo fin de semana' });
         this.nextWeekButton = page.getByRole('button', { name: 'Próxima semana' });
         this.notDateButton = page.getByRole('button', { name: 'Sin fecha' });
+        this.priority1Button = page.getByLabel('Prioridad 1');
+        this.priority2Button = page.getByLabel('Prioridad 2');
+        this.priority3Button = page.getByLabel('Prioridad 3');
+        this.priority4Button = page.getByLabel('Prioridad 4');
+        this.inboxButton = page.getByText('Bandeja de entrada').last();
+        this.task1 = page.getByLabel('Task 1 Test');
+        this.task2 = page.getByLabel('Task 2 Test');
     }
 
-    async addTask(taskName: string): Promise<void>{
+    async addTask(taskName: string, date: string, priority): Promise<void>{
         await this.addTaskButton.click();
         await this.taskInput.fill(taskName);
-
+        await this.selectDate(date);
+        await this.selectPriority(priority)
+        await this.finishTaskButton.click();
     }
 
-    async selectDate(date: string){
-        
+    async selectDate(date: string): Promise<void>{
+        await this.dateButton.click();
+        let selected;
+        switch(date){
+            case dates.tomorrow:
+                selected = this.tomorrowButton;
+                break;
+            case dates.nextWeekend:
+                selected = this.nextWeekendButton;
+                break;
+            case dates.nextWeek:
+                selected = this.nextWeekButton;
+                break;
+            case dates.noDate:
+                selected = this.notDateButton;
+                break;
+            default:
+                throw new Error(`The date selected is not a valid one`);
+        }
+        await selected.click();
+    }
+
+    async selectPriority(priority: string): Promise<void>{
+        await this.priorityButton.click();
+        let selected;
+        switch(priority){
+            case priorities.priority1:
+                selected = this.priority1Button;
+                break;
+            case priorities.priority2:
+                selected = this.priority2Button;
+                break;
+            case priorities.priority3:
+                selected = this.priority3Button;
+                break;
+            case priorities.priority4:
+                selected = this.priority4Button;
+                break;
+            default:
+                throw new Error(`The priority selected is not a valid one`);
+        }
+        await selected.click();
+    }
+
+    async clickOnInbox(): Promise<void>{
+        await this.inboxButton.click();
     }
 
 }
