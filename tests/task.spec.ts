@@ -4,8 +4,6 @@ import { LoginPage } from "../pageobjects/login.page";
 import { enums } from "../utils/enums";
 import { DashboardPage } from "../pageobjects/dashboard.page";
 
-let page: Page;
-
 const {
     user,
     taskNames,
@@ -23,7 +21,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 // test.afterEach(async ({ page }) => {
-//     await page.close();
+//     const dashboardPage = new DashboardPage(page);
+
+//     await dashboardPage.clickWithRightOnTask();
+//     const remove = await page.getByRole('menuitem', { name: 'Eliminar ⇧ Eliminar' });
+//     remove.click();
 // })
 
 
@@ -40,7 +42,6 @@ test.describe('In this section we are going to validate different "tasks" functi
         await test.step('I validate that the task is in my dashboard', async () => {
             await expect(dashboardPage.task1).toBeVisible();
         });
-        
     });
     
     test('Create more than one task', async ({ page }) => {
@@ -56,9 +57,44 @@ test.describe('In this section we are going to validate different "tasks" functi
             await expect(dashboardPage.task1).toBeVisible();
             await expect(dashboardPage.task2).toBeVisible();
         });
-        
-        
-    })
+    });
     
+    test('I can modify something of the task created', async ({ page }) => {
+        const dashboardPage = new DashboardPage(page);
+
+        await test.step('I create a new task', async () => {
+            await dashboardPage.addTask(taskNames.task1Test, dates.tomorrow, priorities.priority1);
+            await dashboardPage.clickOnInbox();
+        });
+
+        await test.step('I click on the pencil to edit information of the task', async () => {
+            await dashboardPage.clickWithRightOnTask();
+            const edit = await page.getByText('Editar');
+            await edit.click();
+            await dashboardPage.editTask(taskNames.taskEditName, dates.nextWeek, priorities.priority3);
+        });
+
+        await test.step('I validate that the changes are ok', async () => {
+            await expect(dashboardPage.taskEdited).toBeVisible();
+        })
+    });
+
+    test('I can check all the tasks created', async ({ page }) => {
+        const dashboardPage = new DashboardPage(page);
+
+        await test.step('I create a new task', async () => {
+            await dashboardPage.addTask(taskNames.task1Test, dates.tomorrow, priorities.priority1);
+            await dashboardPage.clickOnInbox();
+        });
+
+        await test.step('I check a task', async () => {
+            await dashboardPage.checkATask();
+        });
+
+        await test.step('I verify that I checked the task', async () => {
+            await expect(dashboardPage.messageAtCheck).toBeVisible();
+        });
+        
+    });
     
 });

@@ -30,6 +30,10 @@ export class DashboardPage{
     readonly inboxButton: Locator;
     readonly task1: Locator;
     readonly task2: Locator;
+    readonly saveButton: Locator;
+    readonly taskEdited: Locator;
+    readonly checkTask: Locator;
+    readonly messageAtCheck: Locator;
     
     constructor(page: Page){
         this.page = page;
@@ -54,13 +58,17 @@ export class DashboardPage{
         this.inboxButton = page.getByText('Bandeja de entrada').last();
         this.task1 = page.getByLabel('Task 1 Test');
         this.task2 = page.getByLabel('Task 2 Test');
+        this.saveButton = page.getByTestId('task-editor-submit-button');
+        this.taskEdited = page.getByLabel('Task Name Edited');
+        this.checkTask = page.getByLabel('Marca la tarea como completada');
+        this.messageAtCheck = page.getByText('tarea completadaDeshacer');
     }
 
-    async addTask(taskName: string, date: string, priority): Promise<void>{
+    async addTask(taskName: string, date: string, priority: string): Promise<void>{
         await this.addTaskButton.click();
         await this.taskInput.fill(taskName);
         await this.selectDate(date);
-        await this.selectPriority(priority)
+        await this.selectPriority(priority);
         await this.finishTaskButton.click();
     }
 
@@ -112,4 +120,18 @@ export class DashboardPage{
         await this.inboxButton.click();
     }
 
+    async clickWithRightOnTask(): Promise<void>{
+        await this.task1.click({ button: 'right' });
+    }
+
+    async editTask(taskName: string, date: string, priority: string): Promise<void>{
+        await this.taskInput.fill(taskName);
+        await this.selectDate(date);
+        await this.selectPriority(priority);
+        await this.saveButton.click();
+    }
+
+    async checkATask(): Promise<void>{
+        await this.checkTask.click();
+    }
 }
