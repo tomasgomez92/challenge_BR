@@ -24,8 +24,7 @@ const priorities = {
 const taskNames = {
     task1Test: 'Task 1 Test',
     task2Test: 'Task 2 Test',
-    task3Test: 'Task 3 Test',
-    taskEditName: 'Task Name Edited'
+    task3Test: 'Task 3 Test'
 }
 
 export const enums = {

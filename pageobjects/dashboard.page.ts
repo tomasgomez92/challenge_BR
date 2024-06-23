@@ -34,6 +34,8 @@ export class DashboardPage{
     readonly taskEdited: Locator;
     readonly checkTask: Locator;
     readonly messageAtCheck: Locator;
+    readonly remove: Locator;
+    readonly confirmRemove: Locator;
     
     constructor(page: Page){
         this.page = page;
@@ -62,6 +64,8 @@ export class DashboardPage{
         this.taskEdited = page.getByLabel('Task Name Edited');
         this.checkTask = page.getByLabel('Marca la tarea como completada');
         this.messageAtCheck = page.getByText('tarea completadaDeshacer');
+        this.remove = page.getByRole('menuitem', { name: 'Eliminar ⇧ Eliminar' });
+        this.confirmRemove = page.getByRole('button', { name: 'Eliminar' });
     }
 
     async addTask(taskName: string, date: string, priority: string): Promise<void>{
@@ -124,8 +128,7 @@ export class DashboardPage{
         await this.task1.click({ button: 'right' });
     }
 
-    async editTask(taskName: string, date: string, priority: string): Promise<void>{
-        await this.taskInput.fill(taskName);
+    async editTask(date: string, priority: string): Promise<void>{
         await this.selectDate(date);
         await this.selectPriority(priority);
         await this.saveButton.click();
@@ -133,5 +136,19 @@ export class DashboardPage{
 
     async checkATask(): Promise<void>{
         await this.checkTask.click();
+    }
+
+    async deleteTask(): Promise<void>{
+        await this.clickWithRightOnTask();
+        await this.remove.click();
+        await this.confirmRemove.click();
+    }
+
+    async hasTask(){
+        let taskIsVisible = false;
+        if(await this.task1 !== null || await this.task2 !== null){
+            taskIsVisible = true;
+        }
+        return await taskIsVisible;
     }
 }

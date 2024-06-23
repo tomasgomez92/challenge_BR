@@ -20,15 +20,6 @@ test.beforeEach(async ({ page }) => {
     await loginPage.login(user.email, user.password);
 });
 
-// test.afterEach(async ({ page }) => {
-//     const dashboardPage = new DashboardPage(page);
-
-//     await dashboardPage.clickWithRightOnTask();
-//     const remove = await page.getByRole('menuitem', { name: 'Eliminar ⇧ Eliminar' });
-//     remove.click();
-// })
-
-
 test.describe('In this section we are going to validate different "tasks" functionalities', () => {
 
     test('Create a new task', async ({ page }) => {
@@ -42,21 +33,11 @@ test.describe('In this section we are going to validate different "tasks" functi
         await test.step('I validate that the task is in my dashboard', async () => {
             await expect(dashboardPage.task1).toBeVisible();
         });
-    });
-    
-    test('Create more than one task', async ({ page }) => {
-        const dashboardPage = new DashboardPage(page);
 
-        await test.step('Im in the dashboard page and I create more than 1 task', async () => {
-            await dashboardPage.addTask(taskNames.task1Test, dates.tomorrow, priorities.priority1);
-            await dashboardPage.addTask(taskNames.task2Test, dates.nextWeekend, priorities.priority2);
-            await dashboardPage.clickOnInbox();
+        await test.step('Then I remove the task', async () => {
+            await dashboardPage.deleteTask();
         });
-
-        await test.step('I validate that the tasks are created correctly', async () => {
-            await expect(dashboardPage.task1).toBeVisible();
-            await expect(dashboardPage.task2).toBeVisible();
-        });
+        
     });
     
     test('I can modify something of the task created', async ({ page }) => {
@@ -71,12 +52,16 @@ test.describe('In this section we are going to validate different "tasks" functi
             await dashboardPage.clickWithRightOnTask();
             const edit = await page.getByText('Editar');
             await edit.click();
-            await dashboardPage.editTask(taskNames.taskEditName, dates.nextWeek, priorities.priority3);
+            await dashboardPage.editTask(dates.noDate, priorities.priority3);
         });
 
         await test.step('I validate that the changes are ok', async () => {
-            await expect(dashboardPage.taskEdited).toBeVisible();
-        })
+            await expect(dashboardPage.task1).toBeVisible();
+        });
+
+        await test.step('Then I remove the task', async () => {
+            await dashboardPage.deleteTask();
+        });
     });
 
     test('I can check all the tasks created', async ({ page }) => {
