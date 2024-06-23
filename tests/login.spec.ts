@@ -4,8 +4,6 @@ import { LoginPage } from "../pageobjects/login.page";
 import { enums } from "../utils/enums";
 import { DashboardPage } from "../pageobjects/dashboard.page";
 
-
-
 test.describe('Validate tha can make the login correctly and the errors', () => {
     
     test('Login successfully', async ({ page }) => {
@@ -49,7 +47,7 @@ test.describe('Validate tha can make the login correctly and the errors', () => 
             await loginPage.login(enums.user.email, enums.user.incorrectpsw);
         });
         
-        await test.step('I login successfully', async () => {
+        await test.step('I see an error message', async () => {
             await expect(loginPage.loginErrorMsg).toBeVisible();
         });
     
@@ -72,7 +70,7 @@ test.describe('Validate tha can make the login correctly and the errors', () => 
             await loginPage.login(enums.user.incorrectEmail, enums.user.password);
         });
         
-        await test.step('I login successfully', async () => {
+        await test.step('I see an error message', async () => {
             await expect(loginPage.loginErrorMsg).toBeVisible();
         });
     

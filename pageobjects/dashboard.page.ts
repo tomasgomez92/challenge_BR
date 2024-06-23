@@ -144,11 +144,4 @@ export class DashboardPage{
         await this.confirmRemove.click();
     }
 
-    async hasTask(){
-        let taskIsVisible = false;
-        if(await this.task1 !== null || await this.task2 !== null){
-            taskIsVisible = true;
-        }
-        return await taskIsVisible;
-    }
 }

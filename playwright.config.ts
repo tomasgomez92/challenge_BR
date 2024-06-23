@@ -48,6 +48,13 @@ export default defineConfig({
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
+    {
+      name: 'API Tests',
+      testMatch: 'APITests/**/*',
+      use: { 
+        baseURL: 'https://api.chucknorris.io/jokes/categories'
+       },
+    },
 
     /* Test against mobile viewports. */
     // {
