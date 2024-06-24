@@ -31,10 +31,10 @@ About: This project has been developed to automate the todoist web page as a cha
   You can run the tests using the following commands:
 
   - Run a single test file, Login Tests Cases:
-    npx playwright test login.spec.ts
+    npx playwright test login.spec.ts chromium
 
   - Run a single test file, Task Tests Cases:
-    npx playwright test task.spec.ts
+    npx playwright test task.spec.ts chromium
 
   - Run a single test file, API Tests Cases:
     npx playwright test --project="API Tests"
