@@ -36,6 +36,7 @@ export class DashboardPage{
     readonly messageAtCheck: Locator;
     readonly remove: Locator;
     readonly confirmRemove: Locator;
+    readonly firstTask: Locator;
     
     constructor(page: Page){
         this.page = page;
@@ -62,10 +63,11 @@ export class DashboardPage{
         this.task2 = page.getByLabel('Task 2 Test');
         this.saveButton = page.getByTestId('task-editor-submit-button');
         this.taskEdited = page.getByLabel('Task Name Edited');
-        this.checkTask = page.getByLabel('Marca la tarea como completada');
+        this.checkTask = page.getByLabel('Marca la tarea como completada').first();
         this.messageAtCheck = page.getByText('tarea completadaDeshacer');
         this.remove = page.getByRole('menuitem', { name: 'Eliminar ⇧ Eliminar' });
         this.confirmRemove = page.getByRole('button', { name: 'Eliminar' });
+        this.firstTask = page.locator('.task_list_item__content').first();
     }
 
     async addTask(taskName: string, date: string, priority: string): Promise<void>{
@@ -125,7 +127,7 @@ export class DashboardPage{
     }
 
     async clickWithRightOnTask(): Promise<void>{
-        await this.task1.click({ button: 'right' });
+        await this.firstTask.click({ button: 'right' });
     }
 
     async editTask(date: string, priority: string): Promise<void>{

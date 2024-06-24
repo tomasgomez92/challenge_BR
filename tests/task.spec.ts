@@ -44,7 +44,7 @@ test.describe('In this section we are going to validate different "tasks" functi
         const dashboardPage = new DashboardPage(page);
 
         await test.step('I create a new task', async () => {
-            await dashboardPage.addTask(taskNames.task1Test, dates.tomorrow, priorities.priority1);
+            await dashboardPage.addTask(taskNames.task2Test, dates.tomorrow, priorities.priority1);
             await dashboardPage.clickOnInbox();
         });
 
@@ -56,11 +56,7 @@ test.describe('In this section we are going to validate different "tasks" functi
         });
 
         await test.step('I validate that the changes are ok', async () => {
-            await expect(dashboardPage.task1).toBeVisible();
-        });
-
-        await test.step('Then I remove the task', async () => {
-            await dashboardPage.deleteTask();
+            await expect(dashboardPage.task2).toBeVisible();
         });
     });
 
@@ -68,7 +64,7 @@ test.describe('In this section we are going to validate different "tasks" functi
         const dashboardPage = new DashboardPage(page);
 
         await test.step('I create a new task', async () => {
-            await dashboardPage.addTask(taskNames.task1Test, dates.tomorrow, priorities.priority1);
+            await dashboardPage.addTask(taskNames.task3Test, dates.tomorrow, priorities.priority1);
             await dashboardPage.clickOnInbox();
         });
 
