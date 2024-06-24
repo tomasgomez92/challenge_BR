@@ -16,7 +16,7 @@ About: This project has been developed to automate the todoist web page as a cha
   - Pre requirements:
   1. Install Node.js
   2. Visual Studio Code
-  3. Install Chrome Brwoser
+  3. Install Chrome Browser
 
   - Installation
   The steps to download and install the template and view it from Visual Studio Code are described below.
