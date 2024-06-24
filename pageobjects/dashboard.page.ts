@@ -37,6 +37,7 @@ export class DashboardPage{
     readonly remove: Locator;
     readonly confirmRemove: Locator;
     readonly firstTask: Locator;
+    readonly descriptionInput: Locator;
     
     constructor(page: Page){
         this.page = page;
