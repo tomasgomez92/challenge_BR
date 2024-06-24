@@ -39,7 +39,7 @@ About: This project has been developed to automate the todoist web page as a cha
   - Run a single test file, API Tests Cases:
     npx playwright test --project="API Tests"
 
-  - Run a single test file, API Tests Cases:
+  - To access to the report of the test cases that were executed:
     npx playwright show-report
     
   # 2. General Structure 💾
